@@ -75,3 +75,4 @@
 .\obj\usr_design.o: ..\..\src\lib\lib.h
 .\obj\usr_design.o: ..\..\src\lib\qnrf.h
 .\obj\usr_design.o: ..\..\src\qnevb\button.h
+.\obj\usr_design.o: ..\..\src\driver\i2c.h

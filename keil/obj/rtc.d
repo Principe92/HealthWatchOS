@@ -12,3 +12,4 @@
 .\obj\rtc.o: ..\..\src\app\app_config.h
 .\obj\rtc.o: ..\src\usr_config.h
 .\obj\rtc.o: ..\..\src\fw\fw_func_addr.h
+.\obj\rtc.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h

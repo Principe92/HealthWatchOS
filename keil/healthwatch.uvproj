@@ -644,6 +644,16 @@
                 <FileArmAds/>
               </FileOption>
             </File>
+            <File>
+              <FileName>qn902xb2_lib_lite.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\src\lib\keil\qn902xb2_lib_lite.lib</FilePath>
+            </File>
+            <File>
+              <FileName>qn902xb4_lib_lite.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\src\lib\keil\qn902xb4_lib_lite.lib</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

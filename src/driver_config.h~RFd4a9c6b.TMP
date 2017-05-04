@@ -140,7 +140,7 @@
 #define CONFIG_DMA_DEFAULT_IRQHANDLER                   TRUE        /*!< Enable/Disable DMA Default IRQ Handler */
 #define CONFIG_DMA_ENABLE_INTERRUPT                     TRUE        /*!< Enable/Disable DMA Interrupt */
 
-#define CONFIG_ENABLE_DRIVER_RTC                        TRUE//FALSE       /*!< Enable/Disable RTC Driver */
+#define CONFIG_ENABLE_DRIVER_RTC                        FALSE       /*!< Enable/Disable RTC Driver */
 #define CONFIG_RTC_DEFAULT_IRQHANDLER                   TRUE        /*!< Enable/Disable RTC Default IRQ Handler */
 #define CONFIG_RTC_ENABLE_INTERRUPT                     TRUE        /*!< Enable/Disable RTC Interrupt */
 
@@ -172,7 +172,7 @@
 #define CONFIG_ENABLE_DRIVER_SLEEP                      TRUE        /*!< Enable/Disable Sleep Driver */
 #define CONFIG_ENABLE_DRIVER_SYSCON                     TRUE        /*!< Enable/Disable System Controller Driver */
 
-#define CONFIG_ENABLE_ROM_DRIVER_CALIB                  FALSE//TRUE        /*!< Enable/Disable Calibration ROM Driver */
+#define CONFIG_ENABLE_ROM_DRIVER_CALIB                  TRUE        /*!< Enable/Disable Calibration ROM Driver */
 
 /// target configuration
 #define GPIO_CALLBACK_EN                                TRUE        /*!< Enable/Disable GPIO Driver Callback */

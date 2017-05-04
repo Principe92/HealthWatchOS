@@ -34,6 +34,7 @@
 #include "gpio.h"
 #include "button.h"
 #include "sleep.h"
+#include "i2c.h"
 
 
 /*
@@ -57,12 +58,16 @@
 
 #define EVENT_BUTTON1_PRESS_ID          0
 
+
 /*
  * GLOBAL VARIABLE DEFINITIONS
  ****************************************************************************************
  */
 
 struct usr_env_tag usr_env = {LED_ON_DUR_IDLE, LED_OFF_DUR_IDLE};
+
+uint8_t i2cbuffer[104];
+uint8_t buffer[100];
 
 
 /*
@@ -121,7 +126,7 @@ static void usr_led1_process(void)
 /**
  ****************************************************************************************
  * @brief Handles blps pressure send request.
- * @param[in] flag_interm Indicate that send blood pressure measurement or intermeiate
+ * @param[in] flag_interm Indicate that send blood pressure measurement or intermediate
  * cuff pressure measurement
  * @description
  * Handles blps pressure send request.
@@ -491,6 +496,28 @@ void usr_button1_cb(void)
     ke_evt_set(1UL << EVENT_BUTTON1_PRESS_ID);
 }
 
+
+void usr_button2_cb(){
+	//Wake up device if in deep sleep
+	usr_button1_cb();
+	
+	// Check if connected to a device
+	
+	
+	// Write 1byte data(0x80) to register(address is 0x00 and 1byte) of device(address is 0x21)
+   I2C_BYTE_WRITE(0x21, 0x00, 0x80);
+	
+  // Read 1byte data from register(address is 0x06 and 1byte) of device(address is 0x21)
+  buffer[0] = I2C_BYTE_READ(0x21, 0x06);
+	
+	printf("Sensor value is: %d", buffer[0]);
+	
+	//ke_timer_set(APP_BLPS_PRESSURE_TIMER, TASK_APP, APP_INTER_BLOOD_PRESSURE_TO);
+	/*app_blps_env->ntf_sending = true;
+	app_blps_pressure_send(INTERMEDIATE_CUFF_PRESSURE);    
+	ke_timer_set(APP_BLPS_PRESSURE_TIMER, TASK_APP, APP_INTER_BLOOD_PRESSURE_TO);*/
+}
+
 /**
  ****************************************************************************************
  * @brief   All GPIO interrupt callback
@@ -504,6 +531,11 @@ void gpio_interrupt_callback(enum gpio_pin pin)
             //Button 1 is used to enter adv mode.
             usr_button1_cb();
             break;
+				
+				case BUTTON2_PIN:
+					//Button 2 is used to initialize blood pressure measurement
+					usr_button2_cb();
+					break;
 
 #if (defined(QN_TEST_CTRL_PIN))
         case QN_TEST_CTRL_PIN:
@@ -526,6 +558,14 @@ void gpio_interrupt_callback(enum gpio_pin pin)
  */
 void usr_init(void)
 {
+		//Initialize I2C master
+    i2c_init(I2C_SCL_RATIO(100000), i2cbuffer, 104);
+	
+		 for (int j = 0; j < 100; j++) {
+        buffer[j] = 0x55 + j;
+    }   
+	
+	
     if(KE_EVENT_OK != ke_evt_callback_set(EVENT_BUTTON1_PRESS_ID, 
                                             app_event_button1_press_handler))
     {
